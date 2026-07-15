@@ -6,4 +6,5 @@ Thumbs.db
 
 # Node / Bun
 node_modules/
+.proposal-closing-pipeline.json
 bun.lockb

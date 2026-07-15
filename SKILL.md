@@ -152,7 +152,16 @@ When the deal reaches verbal commit:
 
 ## Deal Tracking
 
-Maintain a deal record for each active opportunity using the fields in `references/closing-ops.md`. Update after every material action. Track:
+Maintain a deal record for each active opportunity in `pipeline.md` using the fields in `references/closing-ops.md`. Update after every material action. The included zero-dependency CLI keeps the deal table and health snapshot current:
+
+```bash
+bun scripts/pipeline.ts list
+bun scripts/pipeline.ts health
+bun scripts/pipeline.ts add --name "Organization" --stage proposal-sent --package "AI Foundations Workshop" --fee 5000 --probability 50 --next "Follow up" --due 2026-08-01
+bun scripts/pipeline.ts set DEAL-001 --stage negotiating --probability 70 --next "Send contract" --due 2026-08-05
+```
+
+Use `bun scripts/pipeline.ts init --file /path/to/pipeline.md` to create a separate pipeline outside the skill repository. Track:
 
 - **Proposal-to-close rate:** proposals sent vs. signed deals
 - **Average contract value:** mean revenue per closed deal

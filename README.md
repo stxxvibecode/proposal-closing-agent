@@ -31,6 +31,7 @@ proposal-closing-agent/
 ├── README.md                             # This file
 ├── LICENSE                               # MIT
 ├── .gitignore
+├── pipeline.md                           # Living deal pipeline and health snapshot
 ├── assets/
 │   ├── proposal-template.md             # Proposal email + document template
 │   ├── scope-of-work-template.md        # SOW template for larger engagements
@@ -41,11 +42,19 @@ proposal-closing-agent/
 └── references/
     ├── workshop-catalog.md              # The four proven workshop packages
     └── closing-ops.md                   # Pricing model, negotiation, deal tracking
+└── scripts/
+    └── pipeline.ts                      # Zero-dependency pipeline CLI
 ```
 
 ## Setup
 
-1. **Clone or download** this skill into your `Skills/` directory.
+1. **Install in Zo Computer.** In the [Skills](/?t=skills) tab, choose the option to add a local skill or import from GitHub, then select this repository. If your Zo installation does not offer GitHub import, clone it into `/home/workspace/Skills/proposal-closing-agent`:
+
+   ```bash
+   git clone https://github.com/stxxvibecode/proposal-closing-agent.git /home/workspace/Skills/proposal-closing-agent
+   ```
+
+   Zo recognizes the skill when it finds `Skills/proposal-closing-agent/SKILL.md`. Start a new chat after installing.
 
 2. **Find and replace** these placeholders throughout the files:
 
@@ -71,6 +80,19 @@ proposal-closing-agent/
 This skill follows the [Agent Skills specification](https://agentskills.io/specification). Place it in your `Skills/` directory and Zo will recognize it automatically.
 
 **Trigger:** Share discovery call notes and ask for a proposal, or ask for help closing a workshop deal.
+
+### Pipeline CLI
+
+The skill includes a Bun CLI for keeping a simple markdown deal pipeline. It requires no package installation.
+
+```bash
+cd /home/workspace/Skills/proposal-closing-agent
+bun scripts/pipeline.ts health
+bun scripts/pipeline.ts add --name "Example Organization" --stage proposal-sent --package "AI Foundations Workshop" --fee 5000 --probability 50 --next "Follow up on proposal" --due 2026-08-01
+bun scripts/pipeline.ts set DEAL-001 --stage negotiating --probability 70 --next "Send contract" --due 2026-08-05
+```
+
+Use `bun scripts/pipeline.ts list` to view all deals. To keep working data outside the installed skill, initialize a separate file with `bun scripts/pipeline.ts init --file /path/to/pipeline.md` and pass the same `--file` option to future commands.
 
 ### With Other AI Tools
 
